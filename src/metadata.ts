@@ -109,6 +109,7 @@ export async function getGKEDescriptor() {
   // with metrics may not necessarily work however.
   //
   const resp = await gcpMetadata.instance('attributes/cluster-name');
+  const zone = await gcpMetadata.instance('zone');
 
   let namespace;
   try {
@@ -124,6 +125,9 @@ export async function getGKEDescriptor() {
     labels: {
       cluster_name: resp,
       namespace_name: namespace,
+      zone,
+      container_name: 'graphql',
+      pod_id: 'graphql-gke-metatest',
     },
   };
 }
